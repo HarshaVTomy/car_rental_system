@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Details</title>
+    <style>
+        /* Overall Page Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #495057;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .details {
+            margin-bottom: 15px;
+        }
+
+        .details p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 5px 0;
+        }
+
+        .details strong {
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-around;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-container img[alt="User Photo"] {
+            width: 200px;
+        }
+
+        .image-container img[alt="Passport Copy"], 
+        .image-container img[alt="Driving License"] {
+            width: 200px;
+        }
+
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .back-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Booking Details</h1>
+        <div class="details">
+            <p><strong>Car:</strong> {{ booking.car.name }}</p>
+            <p><strong>Booked By:</strong> {{ booking.user.name }}</p>
+            <p><strong>Address:</strong> {{ booking.address_line2 }}</p>
+            <!-- <p><strong>State:</strong> {{ booking.state }}</p>
+            <p><strong>Zip Code:</strong> {{ booking.postal_code }}</p> -->
+            <p><strong>Contact Number:</strong> {{ booking.contact_number }}</p>
+            <p><strong>Local Contact Name:</strong> {{ booking.local_contact_name }}</p>
+            <p><strong>Local Contact Number:</strong> {{ booking.local_contact_number }}</p>
+            <p><strong>Aadhar Number:</strong> {{ booking.aadhaar_number }}</p>
+            <p><strong>Driving License Number:</strong> {{ booking.driving_license_number }}</p>
+            <p><strong>Arrival Date:</strong> {{ booking.start_date }}</p>
+            <p><strong>Return Date:</strong> {{ booking.return_date }}</p>
+            <p><strong>Total Price:</strong> {{ booking.total_price }}</p>
+            
+        </div>
+
+        <div class="image-container">
+            {% if booking.user_photo %}
+                <div class="image-item">
+                    <p><strong>User Photo:</strong></p>
+                    <img src="{{ booking.user_photo.url }}" alt="User Photo">
+                </div>
+            {% endif %}
+            
+            {% if booking.passport_copy %}
+                <div class="image-item">
+                    <p><strong>Passport Copy:</strong></p>
+                    <img src="{{ booking.passport_copy.url }}" alt="Passport Copy">
+                </div>
+            {% endif %}
+            
+            {% if booking.driving_license %}
+                <div class="image-item">
+                    <p><strong>Driving License:</strong></p>
+                    <img src="{{ booking.driving_license.url }}" alt="Driving License">
+                </div>
+            {% endif %}
+        </div>
+
+        <a href="{% url 'my_bookings' %}" class="back-btn">Back to Bookings</a>
+    </div>
+</body>
+</html>

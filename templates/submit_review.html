@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Review for {{ car.name }}</h2>
+<form method="POST">
+    {% csrf_token %}
+    
+    <label>Rate this car (optional):</label><br>
+    <div>
+        <input type="radio" name="rating" value="1"> ⭐  
+        <input type="radio" name="rating" value="2"> ⭐⭐  
+        <input type="radio" name="rating" value="3"> ⭐⭐⭐  
+        <input type="radio" name="rating" value="4"> ⭐⭐⭐⭐  
+        <input type="radio" name="rating" value="5"> ⭐⭐⭐⭐⭐  
+    </div>
+
+    <br>
+    
+    <label>Write a review (optional):</label>
+    <textarea name="review_text" class="form-control" rows="3"></textarea>
+
+    <br>
+    
+    <button type="submit" class="btn btn-primary">Submit Review</button>
+    <a href="{% url 'my_bookings' %}" class="btn btn-secondary">Skip</a>  <!-- Skip Button -->
+</form>
+{% endblock %}

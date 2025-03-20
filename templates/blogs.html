@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{% static "images/bg_3.jpg" %}');" data-stellar-background-ratio="0.5">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+      <div class="col-md-9 ftco-animate pb-5">
+        <p class="breadcrumbs">
+          <span class="mr-2"><a href="{% url 'home' %}">Home <i class="ion-ios-arrow-forward"></i></a></span> 
+          <span>Blog <i class="ion-ios-arrow-forward"></i></span>
+        </p>
+        <h1 class="mb-3 bread">Our Blog</h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ftco-section">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      {% for blog in blogs %}
+      <div class="col-md-12 text-center d-flex ftco-animate">
+        <div class="blog-entry justify-content-end mb-md-5">
+          <a href="{{ blog.get_absolute_url }}" class="block-20 img" style="background-image: url('{{ blog.image.url }}');">
+          </a>
+          <div class="text px-md-5 pt-4">
+            <div class="meta mb-3">
+              <div><a href="#">{{ blog.created_at|date:"M. d, Y" }}</a></div>
+              <div><a href="#">{{ blog.author }}</a></div>
+              <div><a href="#" class="meta-chat"><span class="icon-chat"></span> {{ blog.comments_count }}</a></div>
+            </div>
+            <h3 class="heading mt-2"><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></h3>
+            <p>
+              {{ blog.excerpt }}
+              {% if blog.content|length > 150 %}
+              <a href="{{ blog.get_absolute_url }}" class="text-primary">Read More</a>
+              {% endif %}
+            </p>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p>No blogs available at the moment.</p>
+      {% endfor %}
+    </div>
+    
+    
+    <!-- Pagination -->
+    <div class="row mt-5">
+      <div class="col text-center">
+        <div class="block-27">
+          <ul>
+            {% if blogs.has_previous %}
+              <li><a href="?page={{ blogs.previous_page_number }}">&lt;</a></li>
+            {% endif %}
+            {% for page_num in blogs.paginator.page_range %}
+              {% if page_num >= blogs.number|add:'-2' and page_num <= blogs.number|add:'2' %}
+              <li class="{% if blogs.number == page_num %}active{% endif %}">
+                <a href="?page={{ page_num }}">{{ page_num }}</a>
+              </li>
+              {% endif %}
+            {% endfor %}
+            {% if blogs.has_next %}
+              <li><a href="?page={{ blogs.next_page_number }}">&gt;</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

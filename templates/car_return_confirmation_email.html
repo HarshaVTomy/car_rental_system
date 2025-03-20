@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Return Confirmation</title>
+</head>
+<body>
+    <h2>Car Return Confirmation</h2>
+    <p>Dear {{ user.username }},</p>
+    <p>We have successfully processed the return of your car booking.</p>
+    <p><strong>Booking Details:</strong></p>
+    <ul>
+        <li><strong>Booking ID:</strong> {{ booking_id }}</li>
+        <li><strong>Car:</strong> {{ car.name }}</li>
+        <li><strong>Return Date:</strong> {{ return_date }}</li>
+    </ul>
+    <p>Thank you for choosing our service. We look forward to serving you again!</p>
+    <p>Best regards,<br>Your Car Rental Team</p>
+</body>
+</html>

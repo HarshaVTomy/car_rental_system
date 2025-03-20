@@ -1,0 +1,9 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<h2>Bookings Report</h2>
+<ul class="list-group">
+    <li class="list-group-item"><strong>Daily:</strong> {{ daily }}</li>
+    <li class="list-group-item"><strong>Monthly:</strong> {{ monthly }}</li>
+    <li class="list-group-item"><strong>Yearly:</strong> {{ yearly }}</li>
+</ul>
+{% endblock %}

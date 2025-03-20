@@ -1,0 +1,93 @@
+
+{% block content %}
+<style>
+    /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Container */
+.container {
+    max-width: 500px;
+    margin: 40px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+/* Inputs */
+input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+/* Submit Button */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+</style>
+<div class="container mt-5">
+    <h2>Submit a New Car</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+            <div class="form-group">
+                <label for="document_proof">Car Ownership Proof:</label>
+                <input type="file" name="document_proof" id="document_proof" required>
+            </div>
+            <div class="form-group">
+                <label for="insurance_copy">Insurance Copy:</label>
+                <input type="file" name="insurance_copy" id="insurance_copy" required>
+            </div>
+            <div class="form-group">
+                <label for="registration_certificate">Registration Certificate:</label>
+                <input type="file" name="registration_certificate" id="registration_certificate" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Car</button>
+        </form>
+</div>
+{% endblock %}

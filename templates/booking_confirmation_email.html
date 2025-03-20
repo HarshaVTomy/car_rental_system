@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .email-header {
+            background: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+        }
+        .email-footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .details-table th, .details-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .details-table th {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <h1>Booking Confirmation</h1>
+        </div>
+        <p>Dear {{ full_name }},</p>
+        <p>Thank you for booking with us! Here are your booking details:</p>
+        <table class="details-table">
+            <tr>
+                <th>Booking ID</th>
+                <td>{{ booking_id }}</td>
+            </tr>
+            <tr>
+                <th>Car</th>
+                <td>{{ car.name }}</td>
+            </tr>
+            <tr>
+                <th>Pickup Date</th>
+                <td>{{ booking.start_date }}</td>
+            </tr>
+            <tr>
+                <th>Return Date</th>
+                <td>{{ booking.return_date }}</td>
+            </tr>
+            <tr>
+                <th>Total Amount</th>
+                <td>₹{{ booking.total_price }}</td>
+            </tr>
+        </table>
+        <h3>Terms and Conditions</h3>
+        <div>
+            <!-- The terms HTML content will be included here -->
+            {{ terms_html|safe }}
+        </div>
+
+        <h3>Pickup Location</h3>
+        <p>{{ pickup_location }}</p>
+
+        <p>If you have any questions, feel free to contact us.</p>
+        <div class="email-footer">
+            <p>&copy; {{ year }} Car Rental Service. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

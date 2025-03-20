@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cars in {{ category.category_name }}</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+        }
+        h1 {
+            margin: 30px 0;
+            text-align: center;
+            font-weight: bold;
+            color: #343a40; /* Dark gray for the title */
+        }
+        .card {
+            margin: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .btn-primary, .btn-secondary {
+            width: 48%;
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+        .empty-message {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Cars in {{ category.category_name }}</h1>
+
+        <div class="row">
+            {% if cars %}
+                {% for car in cars %}
+                    <div class="col-md-4 col-lg-3 d-flex align-items-stretch">
+                        <div class="card">
+                            <a href="{% url 'car_detail' car.id %}">
+                                <img src="{{ car.image1.url }}" class="card-img-top" alt="{{ car.name }}">
+                            </a>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ car.name }}</h5>
+                                <p class="card-text text-muted">₹{{ car.price_per_day }} / day</p>
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'book_now' car.id %}" class="btn btn-primary">Book Now</a>
+                                    <a href="{% url 'car_detail' car.id %}" class="btn btn-secondary">Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="empty-message">No cars available in this category.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('static/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+                <div class="col-md-9 ftco-animate pb-5">
+                    <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home' %}">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Car Details</span></p>
+                    <h1 class="mb-3 bread">{{ car.name }}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    {% if car.image1 %}
+                    <img class="img-fluid rounded" src="{{ car.image1.url }}" alt="Car Image">
+                    {% else %}
+                    <div class="img rounded d-flex align-items-end" style="background-image: url('static/images/no-image-available.jpg');">
+                        <p class="text-center">No image available</p>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-6">
+                    {% if car.image2 %}
+                    <img class="img-fluid rounded" src="{{ car.image2.url }}" alt="Car Image">
+                    {% else %}
+                    <div class="img rounded d-flex align-items-end" style="background-image: url('static/images/no-image-available.jpg');">
+                        <p class="text-center">No image available</p>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-6">
+                    <div class="text">
+                        <h2>{{ car.name }} ({{ car.year }})</h2>
+                        <p><strong>Brand:</strong> {{ car.brand }}</p>
+                        <p><strong>Price per Day:</strong> ₹{{ car.price_per_day }}</p>
+                        <p><strong>Fuel Type:</strong> {{ car.fuel_type }}</p>
+                        <p><strong>Seating Capacity:</strong> {{ car.seating_capacity }}</p>
+                        <p><strong>Description:</strong> {{ car.description }}</p>
+                        <p><strong>Availability:</strong> {{ car.availability }}</p>
+                        <p><strong>Features:</strong></p>
+                        <ul>
+                            <li>AC: {% if car.ac %} Yes {% else %} No {% endif %}</li>
+                            <li>Sunroof: {% if car.sunroof %} Yes {% else %} No {% endif %}</li>
+                            <li>Air Bags: {% if car.air_bags %} Yes {% else %} No {% endif %}</li>
+                            <li>Central Locking: {% if car.central_lock %} Yes {% else %} No {% endif %}</li>
+                        </ul>
+                        <p><a href="{% url 'book_now' car.id %}" class="btn btn-primary py-2">Book Now</a></p>
+                    </div>
+                    
+                    <h3>Reviews:</h3>
+                    {% for review in car.reviews.all %}
+                        <p><strong>{{ review.user.customer.customer_name }}</strong> - 
+                        {% if review.rating %}
+                            {% for _ in "x"|rjust:review.rating %}⭐{% endfor %} ({{ review.rating }} Stars)
+                        {% else %}
+                            No rating given
+                        {% endif %}
+                        </p>
+                        {% if review.review_text %}
+                            <p>{{ review.review_text }}</p>
+                        {% endif %}
+                        <hr>
+                    {% empty %}
+                        <p>No reviews yet. Be the first to review this car!</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

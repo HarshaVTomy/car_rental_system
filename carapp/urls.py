@@ -1,0 +1,60 @@
+from django.contrib import admin
+from django.urls import path,include
+from . import views
+from django.contrib.auth.views import LogoutView
+from .views import SellerLoginView
+from carapp.views import submit_review  # Import the view function
+from .views import customer_report, top_rented_cars,  reviews_report, export_customers_csv,download_top_rented_cars,download_reviews
+
+
+urlpatterns = [
+    path('',views.home,name="home"),
+    path('about/',views.about,name="about"),
+    path('services/',views.services,name="services"),
+    path('pricing/',views.pricing,name="pricing"),
+    path('cars/',views.cars,name="cars"),
+    path('contact/',views.contact,name="contact"),
+    path('car/<int:id>/', views.car_detail, name='car_detail'),
+    path('search-cars/', views.search_cars, name='search_cars'),
+    path('terms/',views.terms,name="terms"),
+    path('accounts/', include("django.contrib.auth.urls")),
+    path('register/', views.register, name='register'),
+    path('login/', views.login_view, name='login'),
+    path('customer_dashboard/',views.customer_dashboard,name='customer_dashboard'),
+    path('change_password/', views.change_password, name='change_password'),
+    path('forgot_password/', views.forgot_password, name='forgot_password'),
+    path('reset_password/<uidb64>/<token>/', views.reset_password, name='reset_password'),
+    path('logout/', views.user_logout, name='logout'),
+    path('edit_customer/', views.edit_customer, name='edit_customer'),
+    path('address/', views.address_list, name='address_list'),
+    path('address/add/', views.address_create, name='address_create'),
+    path('address/edit/<int:pk>/', views.address_edit, name='address_edit'),
+    path('address/delete/<int:pk>/', views.address_delete, name='address_delete'),
+    path('book/<int:car_id>/', views.book_now, name='book_now'),
+    path('booking/success/', views.booking_success, name='booking_success'),
+    path('booking_details/<int:booking_id>/', views.booking_details, name='booking_details'),
+    path('category/<int:category_id>/', views.category_products, name='category_products'),
+    path('subcategory/<int:subcategory_id>/', views.subcategory_products, name='subcategory_products'),
+    path('blogs/', views.blog_view, name='blogs'), 
+    path('blogs/<int:pk>/', views.blog_detail_view, name='blog_detail'),
+    path('my_bookings/', views.my_bookings, name='my_bookings'),
+    # path('payment/', views.payment_page, name='payment_page'),
+    path('payment/create-checkout-session/<int:booking_id>/', views.create_checkout_session, name='create_checkout_session'),
+    path('payment/success/<int:booking_id>/', views.payment_success, name='payment_success'),
+    path('payment/failed/', views.payment_failed, name='payment_failed'),
+    path('checkout/<int:booking_id>/', views.checkout, name='checkout'),
+    path('download-invoice/<int:booking_id>/', views.download_invoice, name='download_invoice'),
+    path('return_car/<int:booking_id>/', views.return_car, name='return_car'),
+    path('cancel_booking/<int:booking_id>/', views.cancel_booking, name='cancel_booking'),
+    path('seller/dashboard/', views.seller_dashboard, name='seller_dashboard'),
+    path('seller_login/', SellerLoginView.as_view(), name='seller_login'),
+    path('seller/add-car/', views.seller_add_car, name='seller_add_car'),
+    path('car/<int:car_id>/review/', submit_review, name='submit_review'),
+    path('reports/customers/', customer_report, name='customer_report'),
+    path('reports/top-rented-cars/', top_rented_cars, name='top_rented_cars'),
+    # path('reports/bookings/', bookings_report, name='bookings_report'),
+    path('reports/reviews/', reviews_report, name='reviews_report'),
+    path('reports/customers/export/', export_customers_csv, name='export_customers_csv'),
+    path('download-top-rented-cars/', download_top_rented_cars, name='download_top_rented_cars'),
+    path('reports/download-reviews/', download_reviews, name='download_reviews'),
+]

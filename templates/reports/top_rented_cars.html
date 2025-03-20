@@ -1,0 +1,77 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card shadow p-4">
+        <h2 class="text-center mb-4">🚗 Top Rented Cars</h2>
+
+        <!-- Table Container -->
+        <div class="table-responsive">
+            <table class="table table-striped table-hover text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Car</th>
+                        <th>Total Rentals</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for car in top_rented %}
+                    <tr>
+                        <td>{{ car.car__name }}</td>
+                        <td>{{ car.total }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Download Button -->
+        <div class="text-center mt-3">
+            <a href="{% url 'download_top_rented_cars' %}" class="btn btn-success btn-lg">
+                ⬇ Download CSV
+            </a>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="mt-4 d-flex justify-content-center">
+            <div style="width: 500px; height: 400px;">
+                <canvas id="topCarsChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Load Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('topCarsChart').getContext('2d');
+
+    var topCarsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ car_names|safe }},  // Dynamically set car names
+            datasets: [{
+                label: 'Total Rentals',
+                data: {{ rental_counts|safe }},  // Dynamically set rental counts
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }  // Hide legend for a cleaner look
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+
+<!-- Add Bootstrap for Styling -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+{% endblock %}

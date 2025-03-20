@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Section for displaying the car list -->
+<section class="ftco-section ftco-car-list">
+  <div class="container">
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-7 text-center heading-section ftco-animate">
+        <span class="subheading">Available Cars</span>
+        <h2 class="mb-3">Choose Your Perfect Car</h2>
+      </div>
+    </div>
+    
+    <!-- Loop to display each car from the context -->
+    <div class="row">
+      {% for car in cars %}
+        <div class="col-md-4">
+          <div class="car-wrap rounded ftco-animate">
+            <div class="img rounded d-flex align-items-end" style="background-image: url('{{ car.image_url }}');"></div>
+            <div class="text">
+              <h2 class="mb-0"><a href="#">{{ car.name }}</a></h2>
+              <div class="d-flex mb-3">
+                <span class="cat">{{ car.brand }}</span>
+                <p class="price ml-auto">${{ car.price }} <span>/day</span></p>
+              </div>
+              <p class="d-flex mb-0 d-block">
+                <a href="{% url 'car_details' car.id %}" class="btn btn-primary py-2 mr-1">Book now</a>
+                <a href="{% url 'car_details' car.id %}" class="btn btn-secondary py-2 ml-1">Details</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

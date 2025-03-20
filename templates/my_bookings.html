@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings</title>
+    <style>
+        /* Overall Page Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #343a40;
+        }
+
+        /* Table Styling */
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #343a40;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td {
+            vertical-align: middle;
+        }
+
+        /* Button Styling */
+        .btn {
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            text-align: center;
+            display: inline-block;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background-color: #1e7e34;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background-color: #bd2130;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .btn:disabled, .btn[aria-disabled="true"] {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Center the table and add some spacing around the page */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Bookings</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Car</th>
+                    <th>Status</th>
+                    <th>Payment Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.car.name }}</td>
+                    <td>{{ booking.status }}</td>
+                    <td>{{ booking.payment_status }}</td>
+                    <td>
+                        <!-- View Details Button -->
+                        <a href="{% url 'booking_details' booking.id %}" class="btn btn-info">View Details</a>
+                        
+                        <!-- Cancel Booking Button -->
+                        {% if booking.status == 'Confirmed' %}
+                        <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger">Cancel Booking</a>
+                        {% endif %}
+                        
+                        <!-- Pay Now Button -->
+                        {% if booking.status == 'Confirmed' and booking.payment_status == 'Pending' %}
+                            <a href="{% url 'checkout' booking.id %}" class="btn btn-primary">Pay Now</a>
+                        {% else %}
+                            <button class="btn btn-secondary" disabled aria-disabled="true">Pay Now</button>
+                        {% endif %}
+
+                        <!-- Download Bill Button -->
+                        {% if booking.status == 'Confirmed' and booking.payment_status == 'Paid' %}
+                            <a href="{% url 'download_invoice' booking.id %}" class="btn btn-success">Download Bill</a>
+                        {% endif %}
+
+                        <!-- Return Car Button -->
+                        {% if booking.status == 'Confirmed' and booking.payment_status == 'Paid' %}
+                            {% if not booking.car_returned %}
+                                <a href="{% url 'return_car' booking.id %}" class="btn btn-primary">Return Car</a>
+                            {% else %}
+                                <button class="btn btn-success" disabled aria-disabled="true">Car Returned</button>
+                            {% endif %}
+                        {% else %}
+                            <button class="btn btn-secondary" disabled aria-disabled="true">Return Car</button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'home' %}" class="btn btn-secondary py-2 ml-1">Go Back</a>
+    </div>
+</body>
+</html>

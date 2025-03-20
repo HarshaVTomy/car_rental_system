@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h1>Payment Page</h1>
+    <button id="checkout-button">Pay Now</button>
+
+    <script>
+        const stripe = Stripe('{{ stripe_publishable_key }}');
+
+        document.getElementById('checkout-button').addEventListener('click', () => {
+            fetch("{% url 'create_checkout_session' %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    stripe.redirectToCheckout({ sessionId: data.id });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

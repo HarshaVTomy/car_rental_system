@@ -1,0 +1,114 @@
+<style>
+
+.car-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+}
+
+.car-item {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+}
+
+.car-item:hover {
+    transform: translateY(-10px);
+}
+
+.car-image img {
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid #ddd;
+}
+
+.car-details {
+    padding: 15px;
+}
+
+.car-details h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.car-details p {
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+.car-actions {
+    padding: 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.car-actions .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.car-actions .btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.car-actions .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.car-actions .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.car-actions .btn-secondary:hover {
+    background-color: #495057;
+}
+
+p {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+</style>
+
+<h2>Available Cars</h2>
+
+{% if cars %}
+    <div class="car-list">
+        {% for car in cars %}
+            <div class="car-item">
+                <div class="car-image">
+                    {% if car.image1 %}
+                        <img src="{{ car.image1.url }}" alt="{{ car.name }}" class="img-fluid">
+                    {% else %}
+                        <img src="default-image.jpg" alt="{{ car.name }}" class="img-fluid">
+                    {% endif %}
+                </div>
+                <div class="car-details">
+                    <h3>{{ car.name }} ({{ car.brand }})</h3>
+                    <p><strong>Year:</strong> {{ car.year }}</p>
+                    <p><strong>Price per day:</strong> ${{ car.price_per_day }}</p>
+                    <p><strong>Seats:</strong> {{ car.seating_capacity }}</p>
+                    <p><strong>Fuel type:</strong> {{ car.fuel_type }}</p>
+                    <p><strong>Available:</strong> {% if car.availability %} Yes {% else %} No {% endif %}</p>
+                </div>
+                <div class="car-actions">
+                    <a href="{% url 'book_now' car.id %}" class="btn btn-primary">Book Now</a>
+                    <a href="{% url 'car_detail' car.id %}" class="btn btn-secondary">Details</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No cars found that match your criteria.</p>
+{% endif %}

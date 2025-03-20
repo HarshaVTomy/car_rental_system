@@ -1,0 +1,13 @@
+# Byte-compiled / cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Database
+db.sqlite3
+
+# Media files (uploads)
+media/
+
+# Virtual environment (if using venv)
+venv/

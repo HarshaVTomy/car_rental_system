@@ -1,0 +1,19 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<h2>Customer Report</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Username</th><th>Email</th><th>Contact</th></tr>
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.user.username }}</td>
+            <td>{{ customer.user.email }}</td>
+            <td>{{ customer.contact_number }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'export_customers_csv' %}" class="btn btn-primary">Download CSV</a>
+{% endblock %}

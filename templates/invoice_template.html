@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .total {
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-header">
+        <h1>Car Booking Invoice</h1>
+        <p>Booking ID: {{ booking.id }}</p>
+        <p>Booking Status: {{ booking.status }}</p>
+    </div>
+
+    <h3>Customer Details:</h3>
+    <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+
+    <h3>Booking Details:</h3>
+    <table>
+        <tr>
+            <th>Car</th>
+            <th>Pickup Location</th>
+            <th>Start Date</th>
+            <th>Return Date</th>
+            <th>Total Price</th>
+        </tr>
+        <tr>
+            <td>{{ booking.car.name }}</td>
+            <td>{{ pickup_location }}</td>
+            <td>{{ booking.start_date }}</td>
+            <td>{{ booking.return_date }}</td>
+            <td>₹ {{ booking.total_price }}</td>
+        </tr>
+    </table>
+
+    <div class="footer">
+        <p>Thank you for booking with us!</p>
+    </div>
+</body>
+</html>

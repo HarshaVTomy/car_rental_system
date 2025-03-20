@@ -13,4 +13,4 @@ requests
 django-cors-headers
 xhtml2pdf
 stripe
-jazzmin
+django-jazzmin
